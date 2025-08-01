@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | Pokédex
+{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+        <h1 class="mb-4 text-center">Pokédex</h1>
+        <div class="d-flex justify-content-center gap-2 my-4">
+            <a href="{{ path('pokemon_tri', {'filter': 'asc'}) }}" class="btn btn-outline-primary btn-sm">Nom croissant</a>
+            <a href="{{ path('pokemon_tri', {'filter': 'desc'}) }}" class="btn btn-outline-primary btn-sm">Nom décroissant</a>
+            <a href="{{ path('pokemon_tri', {'filter': 'captured'}) }}" class="btn btn-outline-success btn-sm">Capturés</a>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for pokemon in pokemons %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm position-relative">
+
+                        {# Icône pokéball en haut à droite #}
+                        <img src="{{ asset(pokemon.estCapture
+                            ? 'img/icon/pokeball-ok.jpg'
+                            : 'img/icon/pokeball-ko.jpg') }}"
+                             alt="statut"
+                             class="position-absolute"
+                             style="top: 10px; right: 10px; width: 32px; height: 32px; z-index: 10;">
+
+                        <img src="{{ asset(pokemon.image) }}" alt="{{ pokemon.nom }}"
+                             class="img-thumbnail mx-auto d-block mt-3" style="width: 150px; height: auto;">
+
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ pokemon.nom }}</h5>
+                            <p class="card-text">
+                                {{ pokemon.description|length > 150
+                                ? pokemon.description[:150] ~ '…'
+                                : pokemon.description }}
+                            </p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center">
+                            <a href="{{ path('pokemon_details', {'id': pokemon.id}) }}" class="btn btn-primary btn-sm">Voir</a>
+                            {% if pokemon.estCapture %}
+                                <a href="{{ path('pokemon_capture', {'id': pokemon.id}) }}"
+                                   class="btn btn-outline-success btn-sm">
+                                    Relâcher
+                                </a>
+                            {% else %}
+                                <a href="{{ path('pokemon_capture', {'id': pokemon.id}) }}"
+                                   class="btn btn-outline-secondary btn-sm">
+                                    Capturer
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucun Pokémon trouvé en base de données.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ parent() }} | Accueil
+{% endblock %}
+
+{% block body %}
+    <div>
+        <a href="{{ path('pokemon_liste') }}"><img class="container-fluid" src="{{ asset('img/pokemon/pokemon_logo.png') }}" alt="Logo de la franchise Pokemon"></a>
+    </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ parent() }} | {{ pokemon.nom }}
+{% endblock %}
+
+{% block body %}
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card shadow-lg">
+                    <div class="text-center p-4">
+                        <img src="{{ asset(pokemon.image) }}" alt="{{ pokemon.nom }}"
+                             class="img-fluid" style="max-height: 250px; object-fit: contain;">
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title text-center">{{ pokemon.nom }}</h2>
+                        <p class="card-text text-muted">{{ pokemon.description }}</p>
+                        <hr>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Attaque :</strong> {{ pokemon.attaque }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Défense :</strong> {{ pokemon.defense }}
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Statut :</strong>
+                                {% if pokemon.estCapture %}
+                                    <span class="badge bg-success">Capturé</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">À capturer</span>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer text-end">
+                        <a href="{{ path('pokemon_liste') }}" class="btn btn-outline-secondary">← Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
